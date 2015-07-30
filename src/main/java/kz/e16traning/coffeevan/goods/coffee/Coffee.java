@@ -1,5 +1,6 @@
 package kz.e16traning.coffeevan.goods.coffee;
 
+import kz.e16traning.coffeevan.exception.LoadPriceFromFileException;
 import kz.e16traning.coffeevan.goods.IGoods;
 import kz.e16traning.coffeevan.goods.coffee.condition.CoffeeCondition;
 import kz.e16traning.coffeevan.goods.coffee.type.CoffeeType;
@@ -18,7 +19,13 @@ public class Coffee implements IGoods {
     private final CoffeeCondition coffeeCondition;
 
     public Coffee(CoffeeType coffeeType, CoffeeWrap coffeeWrap, CoffeeCondition coffeeCondition) {
-        PriceOfCoffee priceOfCoffee = new PriceOfCoffee();
+        PriceOfCoffee priceOfCoffee = null;
+        try {
+            priceOfCoffee = new PriceOfCoffee();
+        } catch (LoadPriceFromFileException e) {
+            System.out.println(e.getMessage());
+            System.exit(0);
+        }
         this.coffeeType = coffeeType;
         this.coffeeWrap = coffeeWrap;
         this.coffeeCondition = coffeeCondition;
